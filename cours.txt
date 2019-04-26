@@ -1,0 +1,34 @@
+                                CORDOVA
+
+(compilateur pour nav mobile)
+
+
+
+
+
+Run : npm install -g cordova
+Run : java -version
+
+Voir les variable système dans l'explorateur =  "path"  "/Modifier les variables d'environement système"
+
+
+
+Create the APP
+(https://cordova.apache.org/docs/en/latest/guide/cli/index.html)
+
+
+Init cordova
+Run in file compil : cordova create myExemple
+Run in myExemple : cordova platform add android
++ Run : cordova platform add browser
+
+
+Run : cordova serve (lancement d'un serveur)
+
+
+
+
+Dans le script top toujours mettre :   <script>
+                                              document.addEventListener('deviceready',function () {
+                                              }
+                                          </script>

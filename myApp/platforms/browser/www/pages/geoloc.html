@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; script-src 'self' 'unsafe-inline';  style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
+    <link rel="stylesheet" type="text/css" href="../css/index.css">
+    <link rel="stylesheet" type="text/css" href="../magic/magic.css">
+    <title>Hello World</title>
+    <style>
+        #map {
+            width: 400px;
+            height: 250px;
+        }
+    </style>
+
+    <script>
+
+        document.addEventListener('deviceready',function () {
+
+
+
+            document.querySelector("#location").addEventListener('touchstart', function () {
+                document.querySelector("#message").innerHTML = "Recherche en cours ...";
+
+
+                let options = { timeout: 15000 };   //le temps de recherche max, au dela message d'erreur
+
+                navigator.geolocation.watchPosition(function(position){
+                    document.querySelector("#message").innerHTML = "";
+                    document.querySelector("#latitude").innerHTML = position.coords.latitude;
+                    document.querySelector("#longitude").innerHTML = position.coords.longitude;
+
+                    document.querySelector("#googleLoc").addEventListener('touchstart', function () {
+                        document.querySelector("#messageGoogle").innerHTML = "Redirection vers Google Map...";
+                        var geocoords = position.coords.latitude + ',' + position.coords.longitude;
+                        var label = encodeURI('you are here'); // encode the label!
+                        window.open('geo:0,0?q=' + geocoords + '(' + label + ')', '_system');
+
+
+                    }, function(error){
+                    document.querySelector("#message").innerHTML = error.message;
+
+
+
+                }, options);
+            });
+            });
+        });
+
+
+    </script>
+</head>
+<body>
+<header>
+    <ul>
+        <li><a class="active" href="#home">Home</a></li>
+        <li><a href="#news">News</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="#about">About</a></li>
+    </ul>
+</header>
+
+<div class="app">
+    <h1>Geolocation</h1>
+
+    <p>
+        <a href="../index.html" class="bouton12">Retour</a>
+    </p>
+    <hr/>
+
+    <section>
+        <div>
+            <button id="location" class="bouton12">Récupérer la position</button>
+            <p id="message"></p>
+            <hr/>
+            <button id="googleLoc" class="bouton12">Google Map View</button>
+            <p id="messageGoogle"></p>
+        </div>
+
+        <p><strong>Latitude : </strong><span id="latitude"></span></p>
+        <p><strong>Longitude : </strong><span id="longitude"></span></p>
+
+
+    </section>
+
+
+    <div id="map"></div>
+    <script src="../js/index.js"></script>
+    <script type="text/javascript" src="../cordova.js"></script>
+
+</body>
+</html>

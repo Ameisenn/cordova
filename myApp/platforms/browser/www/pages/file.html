@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; script-src 'self' 'unsafe-inline' ; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content: ; connect-src 'self' https://jsonplaceholder.typicode.com">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/modal.css">
+
+    <title>Hello World</title>
+    <script>
+
+        document.addEventListener('deviceready', function () {
+            let content = document.querySelector("#content");
+            let write = document.querySelector("#write");
+
+            let file = null;    // pour l'instant file est null
+
+            window.resolveLocalFileSystemURL(cordova.file.dataDirectory, function(directory) {
+                alert(directory.toURL());
+                let options = { create: true };// creation du fichier
+                directory.getFile('formation.txt', options, function (localfile) {
+                    file = localfile                // maintenant file n'est plus null
+                });
+            });
+
+
+            write.addEventListener('touchend', function () {
+                if(!file) return;
+
+                file.createWriter(function(fileWriter){      //ecrire dans file
+                    fileWriter.seek( fileWriter.length );  // seek = recherche
+
+                        let blob = new Blob( [content.value, "\n"], {type: 'text/plain'});
+                        fileWriter.write(blob);
+
+                        fileWriter.onwriteend =  function(){
+                            content.value = "";
+                            navigator.notification.alert("Ecriture Terminée")
+                        }
+
+                }, function(){
+                    navigator.notification.alert("Erreur d'écriture")
+                });
+
+            });
+        });
+    </script>
+
+
+</head>
+<body>
+<header>
+    <ul>
+        <li><a class="active" href="#home">Home</a></li>
+        <li><a href="#news">News</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="#about">About</a></li>
+    </ul>
+</header>
+
+<div class="app">
+    <h1>API</h1>
+    <p>
+        <a class="bouton12" href="../index.html">Retour</a>
+    </p>
+
+    <section>
+        <div>
+            <textarea id="content" class=""></textarea>
+        </div>
+
+        <div>
+            <button id="write">Ecrire</button>
+        </div>
+    </section>
+</div>
+
+
+        <script type="text/javascript" src="../cordova.js"></script>
+
+</body>
+</html>

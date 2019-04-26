@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; script-src 'self' 'unsafe-inline' ; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content: ; connect-src 'self' https://jsonplaceholder.typicode.com">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/modal.css">
+
+    <title>Hello World</title>
+    <script>
+
+        function addressUser(user){
+            document.querySelector().innerHTML
+        }
+
+            function render(users) {
+
+            let userList = document.querySelector("#users");
+
+                        for( let user of users){
+                            let li = document.createElement('li');
+                            li.innerHTML= user.name;
+
+                            userList.appendChild(li);
+                        }
+        }
+        document.addEventListener('deviceready', function () {
+
+            fetch(' https://jsonplaceholder.typicode.com/users').then( (response) => {
+                return response.json()
+            }).then( (users)  => {
+                render(users)
+            });
+        });
+
+
+    </script>
+
+
+</head>
+        <body>
+        <header>
+            <ul>
+                <li><a class="active" href="#home">Home</a></li>
+                <li><a href="#news">News</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="#about">About</a></li>
+            </ul>
+        </header>
+
+        <div class="app">
+            <h1>API</h1>
+            <p>
+                <a class="bouton12" href="../index.html">Retour</a>
+            </p>
+
+            <section>
+                <ul id="users" class="list"></ul>
+            </section>
+
+        </div>
+
+
+        <div class="container">
+            <div class="interior">
+                <div  onclick="document.querySelector('.email').classList.remove('expand');event.stopPropagation();">
+                <a class="btn" href="#open-modal">Modal</a>
+            </div>
+        </div>
+        <div id="open-modal" class="modal-window">
+            <div>
+                <a href="#" title="Close" class="modal-close">Close</a>
+        </div>
+       <!-- <section class="modal">
+            <p>Modal</p>
+
+<form autocomplete="off">
+   <label for="e-mail">Your e-mail address: </label>
+   <input name="Email" type="text" required />
+   <input type="submit" value="Submit"/>
+</form>
+
+
+
+        </section> -->
+
+
+        <script type="text/javascript" src="../cordova.js"></script>
+
+        </body>
+</html>

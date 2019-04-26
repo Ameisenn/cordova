@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; script-src 'self' 'unsafe-inline';  style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
+    <link rel="stylesheet" type="text/css" href="../css/index.css">
+    <link rel="stylesheet" type="text/css" href="../magic/magic.css">
+    <title>Hello World</title>
+
+    <script>
+        document.addEventListener('deviceready',function () {
+
+
+            document.querySelector("#clickEvent").addEventListener('click', function () {
+                document.querySelector("#clickEventResponse").innerHTML = "Fini"
+            });
+
+            document.querySelector("#touchStartEvent").addEventListener('touchstart', function () {
+                document.querySelector("#touchStartEventResponse").innerHTML = "Fini"
+            });
+            document.querySelector("#touchEndEvent").addEventListener('touchend', function () {
+                document.querySelector("#touchEndEventResponse").innerHTML = "Fini"
+            });
+        });
+    </script>
+</head>
+<body>
+<header>
+    <ul>
+        <li><a class="active" href="#home">Home</a></li>
+        <li><a href="#news">News</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="#about">About</a></li>
+    </ul>
+</header>
+
+<div class="app">
+    <h1>Event</h1>
+
+    <p>
+        <a href="../index.html" class="bouton12">Retour</a>
+    </p>
+    <hr/>
+
+    <section>
+        <hr/>
+        <p>
+            <button id="clickEvent" class="bouton12">Click</button>
+            <span id="clickEventResponse"></span>
+        </p>
+
+        <p>
+            <button id="touchStartEvent" class="bouton12">ClickTouchStart</button>
+            <span id="touchStartEventResponse"></span>
+        </p>
+
+        <p>
+            <button id="touchEndEvent" class="bouton12">ClickTouchEnd</button>
+            <span id="touchEndEventResponse"></span>
+        </p>
+
+
+
+    </section>
+<script type="text/javascript" src="../cordova.js"></script>
+
+</body>
+</html>

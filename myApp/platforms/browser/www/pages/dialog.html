@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; script-src 'self' 'unsafe-inline';  style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
+    <link rel="stylesheet" type="text/css" href="../css/index.css">
+    <link rel="stylesheet" type="text/css" href="../magic/magic.css">
+    <title>Hello World</title>
+    <script>
+        document.addEventListener('deviceready',function () {
+
+            document.querySelector('#alert-btn').addEventListener('click', function () {
+                navigator.notification.alert('Mon Formateur est cool ! ', null, 'Information', 'Je valide !')
+            });
+            document.querySelector('#confirm-btn').addEventListener('click', function () {
+                navigator.notification.confirm('Etes-vous sur de vouloir quelque chose ?', function (index) {
+
+                    let result = document.querySelector('#confirm-message');
+                    switch(index){
+                        case 1:
+                            result.innerHTML = 'Oui je suis sur !';
+                            break;
+                        case 2:
+                            result.innerHTML = 'Non pas vraiment...';
+                            break;
+                        case 3:
+                            result.innerHTML = 'Je ne sais pas :/';
+                            break;
+                    }
+                }, 'Question', ['Oui', 'Non', 'Anuler'])
+            });
+
+            document.querySelector('#prompt-btn').addEventListener('click', function() {
+                let result = document.querySelector('#prompt-message');
+
+                navigator.notification.prompt('Qui êtes vous?', function(response){
+                    if (response.buttonIndex == 1 && response.input1 !=''){
+                        result.innerText = `Hello ${response.input1}`
+                    } else {
+                        result.innerText = 'Aucunes Informations...'
+                    }
+                }, 'Information', ['Valider', 'Annuler'])
+            });
+
+        });
+    </script>
+</head>
+<body>
+<header>
+    <ul>
+        <li><a class="active" href="#home">Home</a></li>
+        <li><a href="#news">News</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="#about">About</a></li>
+    </ul>
+</header>
+
+<div class="app">
+    <h1>Dialog</h1>
+    <p>
+        <a class="bouton12" href="../index.html">Retour</a>
+    </p>
+
+    <section>
+
+        <p>
+        <button class="bouton12"  id="alert-btn">Alert</button>
+        </p>
+
+        <p>
+        <button class="bouton12" id="confirm-btn">Confirm</button>
+        <p id="confirm-message"></p>
+        </p>
+
+        <p>
+        <button class="bouton12" id="prompt-btn">Prompt</button>
+        <p id="prompt-message"></p>
+        </p>
+    </section>
+
+
+</div>
+<script type="text/javascript" src="../cordova.js"></script>
+
+</body>
+</html>

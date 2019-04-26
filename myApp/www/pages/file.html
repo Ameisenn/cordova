@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; script-src 'self' 'unsafe-inline' ; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content: ; connect-src 'self' https://jsonplaceholder.typicode.com">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/modal.css">
+
+    <title>Hello World</title>
+    <script>
+        let file = null;    // pour l'instant file est null
+
+        function createFile(){
+            if(!file)
+            window.resolveLocalFileSystemURL(cordova.file.dataDirectory, function(directory) {
+                alert(directory.toURL());
+                let options = { create: true };// creation du fichier
+                directory.getFile('formation.txt', options, function (localfile) {
+                    file = localfile                // maintenant file n'est plus null
+                });
+            });
+        }
+
+        document.addEventListener('deviceready', function () {
+            let content = document.querySelector("#content");
+            let write = document.querySelector("#write");
+            let read = document.querySelector("#read");
+            let clear = document.querySelector("#clear");
+            let _delete = document.querySelector("#delete");
+
+            let whiteboard = document.querySelector("#whiteboard");
+
+            createFile();
+
+
+
+            // Write File
+            write.addEventListener('touchend', function(){
+                createFile();
+                if (!file) return
+                file.createWriter(function(fileWriter){
+                    fileWriter.seek(fileWriter.length);
+                    let blob = new Blob([content.value, "\n"], {type: 'text/plain'});
+                    fileWriter.write(blob);
+
+                    fileWriter.onwriteend = function(){
+                        content.value = "";
+                        navigator.notification.alert('Done Writing')
+                    }
+                }, function(){
+                    navigator.notification.alert('Error')
+                })
+            });
+
+
+            // Read File
+            read.addEventListener('touchend', function(){
+                if(!file) return;
+
+                file.file(function(f){
+                    let reader = new FileReader();
+
+                    reader.readAsText(f);
+
+                    reader.onloadend = function(){
+                        whiteboard.innerText = this.result
+                    }
+                })
+            });
+
+
+
+            // Clear File
+            clear.addEventListener('touchend', function(){
+                if(!file) return;
+                file.createWriter(function(fileWriter){
+                    fileWriter.truncate(0);
+                    whiteboard.innerText = ''
+                }, function() {
+                    navigator.notification.alert('Error')
+                })
+            });
+
+
+
+
+            // Delete file
+            _delete.addEventListener('touchend', function (){
+                if(!file) return;
+
+                file.remove(function (){
+                    whiteboard.innerHTML = '';
+                    file = null;
+                    navigator.notification.alert("Delete file")
+
+                })
+
+            });
+
+                file.createWriter(function(fileWriter){      //ecrire dans file
+                    fileWriter.seek( fileWriter.length );  // seek = recherche
+
+                        let blob = new Blob( [content.value, "\n"], {type: 'text/plain'});
+                        fileWriter.write(blob);
+
+                        fileWriter.onwriteend =  function(){
+                            content.value = "";
+                            navigator.notification.alert("Ecriture Terminée")
+                        }
+
+                }, function(){
+                    navigator.notification.alert("Erreur d'écriture")
+                });
+
+            });
+
+    </script>
+
+
+</head>
+<body>
+<header>
+    <ul>
+        <li><a class="active" href="#home">Home</a></li>
+        <li><a href="#news">News</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="#about">About</a></li>
+    </ul>
+</header>
+
+<div class="app">
+    <h1>API</h1>
+    <p>
+        <a class="bouton12" href="../index.html">Retour</a>
+    </p>
+
+    <section>
+        <div>
+            <textarea id="content" class=""></textarea>
+        </div>
+
+        <div>
+            <button id="write" class="bouton12">Ecrire</button>
+            <button id="read" class="bouton12">Lire</button>
+            <button id="clear" class="bouton12">Clear</button>
+            <button id="delete" class="bouton12">Delete</button>
+        </div>
+
+        <pre id="whiteboard"></pre>
+    </section>
+</div>
+
+
+        <script type="text/javascript" src="../cordova.js"></script>
+
+</body>
+</html>
