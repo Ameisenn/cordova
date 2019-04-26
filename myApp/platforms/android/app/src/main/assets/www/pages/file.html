@@ -42,7 +42,7 @@
                 if (!file) return
                 file.createWriter(function(fileWriter){
                     fileWriter.seek(fileWriter.length);
-                    let blob = new Blob([content.value, "\n"], {type: 'text/plain'});
+                    let blob = new Blob([content.value, "\n"], {type: 'text/plain'});   //application/json
                     fileWriter.write(blob);
 
                     fileWriter.onwriteend = function(){

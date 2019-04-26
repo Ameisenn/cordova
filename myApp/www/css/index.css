@@ -96,7 +96,9 @@ li a:hover {
 
 /* Portrait layout (default) */
 .app {
-    background:url(../img/3.png) no-repeat top; /* 170px x 200px */
+
+
+    background:url(../img/3.png) no-repeat top ; /* 170px x 200px */
 
     flex-direction: column;
     align-items: center;
@@ -150,7 +152,9 @@ h1 {
 
 
 
+.preRead {
 
+}
 
 
 
